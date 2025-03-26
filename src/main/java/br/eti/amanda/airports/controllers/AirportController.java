@@ -18,17 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author sesideva
  */
+
 @RestController
 public class AirportController {
 
     @Autowired
     private AirportService airportService;
 
-    /**
-     * Endpoint /airports/airport Retorna TODOS os aeroportos da base de dados.
-     *
-     * @return
-     */
     @GetMapping("/airport")
     public List<Airport> findAll() {
         List<Airport> result = airportService.findAll();
@@ -37,18 +33,21 @@ public class AirportController {
 
     @GetMapping("/country/{countryName}")
     public ResponseEntity<List<AirportMinDTO>> findByCountryIgnoreCase(@PathVariable String countryName) {
-
         List<AirportMinDTO> result = airportService.findByCountry(countryName);
-
         if (result.isEmpty()) {
-
             return ResponseEntity.notFound().build();
         } else {
-
             return ResponseEntity.ok(result);
         }
     }
 
-    
-    
+    @GetMapping("/iatacode/{iataCode}")
+    public ResponseEntity<Airport> findByIataCode(@PathVariable String iataCode) {
+        Airport result = airportService.findByIataCode(iataCode);
+        if (result == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
+    }
 }

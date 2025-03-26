@@ -45,4 +45,9 @@ public List<AirportMinDTO> findByCountry(String country) {
 
     return resultDTO;
 }
+public Airport findByIataCode(String iataCode) {
+    Airport result = airportRepository.findByIataCode(iataCode);
+    return result;
+}
+
 }
