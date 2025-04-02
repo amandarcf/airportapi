@@ -5,7 +5,9 @@
 package br.eti.amanda.airports.service;
 
 import br.eti.amanda.airports.DTO.AirportMinDTO;
+import br.eti.amanda.airports.DTO.AirportNearMeDTO;
 import br.eti.amanda.airports.entities.Airport;
+import br.eti.amanda.airports.projections.AirportNearMeProjection;
 import br.eti.amanda.airports.repositories.AirportRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,22 @@ public List<AirportMinDTO> findByCountry(String country) {
 public Airport findByIataCode(String iataCode) {
     Airport result = airportRepository.findByIataCode(iataCode);
     return result;
+}
+/**
+ * Retorna DTO AirportNearMe
+ *
+ * @param latitude
+ * @param longitude
+ * @return
+ */
+public List<AirportNearMeDTO> findNearMe(double latitude, double longitude) {
+    List<AirportNearMeProjection> resultNearAirports = airportRepository.findNearMe(latitude, longitude);
+
+    List<AirportNearMeDTO> resultDTO = resultNearAirports.stream()
+        .map(x -> new AirportNearMeDTO(x))
+        .toList();
+
+    return resultDTO;
 }
 
 }

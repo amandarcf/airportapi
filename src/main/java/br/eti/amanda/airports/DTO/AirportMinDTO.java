@@ -15,6 +15,7 @@ public class AirportMinDTO {
     private String name;
     private String city;
     private String iataCode;
+    
 
     public AirportMinDTO() {
     }
